@@ -88,11 +88,11 @@ open class EPContactsPicker: UIViewController, UISearchResultsUpdating, UISearch
     }
     
     func inititlizeBarButtons() {
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(onTouchCancelButton))
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(onTouchCancelButton))
         self.navigationItem.leftBarButtonItem = cancelButton
         
         if multiSelectEnabled {
-            let selectAllContactsButton = UIBarButtonItem(title: EPGlobalConstants.SelectAllContactsButton.selectAllContactString, style: UIBarButtonItemStyle.plain, target: self, action: #selector(onTouchSelectionButton))
+            let selectAllContactsButton = UIBarButtonItem(title: EPGlobalConstants.SelectAllContactsButton.selectAllContactString, style: UIBarButtonItem.Style.plain, target: self, action: #selector(onTouchSelectionButton))
             self.navigationItem.rightBarButtonItem = selectAllContactsButton
         }
     }
@@ -113,7 +113,7 @@ open class EPContactsPicker: UIViewController, UISearchResultsUpdating, UISearch
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         sendInvitesButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(onTouchSendInvitesButton))
         updateSendInvitesButtonTitle()
-        let attributes = [NSAttributedStringKey.font:EPGlobalConstants.SendInvitesButton.titleFont!]
+        let attributes = [NSAttributedString.Key.font:EPGlobalConstants.SendInvitesButton.titleFont!]
         sendInvitesButton!.setTitleTextAttributes(attributes, for: [])
         toolBar.items = [space, sendInvitesButton!, space]
         toolBar.backgroundColor = UIColor.white
@@ -209,8 +209,8 @@ open class EPContactsPicker: UIViewController, UISearchResultsUpdating, UISearch
                 
                 let productName = Bundle.main.infoDictionary!["CFBundleName"]!
                 
-                let alert = UIAlertController(title: "Unable to access contacts", message: "\(productName) does not have access to contacts. Kindly enable it in privacy settings ", preferredStyle: UIAlertControllerStyle.alert)
-                let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {  action in
+                let alert = UIAlertController(title: "Unable to access contacts", message: "\(productName) does not have access to contacts. Kindly enable it in privacy settings ", preferredStyle: UIAlertController.Style.alert)
+                let okAction = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: {  action in
                     completion([], error)
                     self.dismiss(animated: true, completion: {
                         self.contactDelegate?.epContactPicker(self, didContactFetchFailed: error)
@@ -392,8 +392,8 @@ open class EPContactsPicker: UIViewController, UISearchResultsUpdating, UISearch
     
     public func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         if resultSearchController.isActive { return 0 }
-        tableView.scrollToRow(at: IndexPath(row: 0, section: index), at: UITableViewScrollPosition.top , animated: false)        
-        return sortedContactKeys.index(of: title)!
+        tableView.scrollToRow(at: IndexPath(row: 0, section: index), at: UITableView.ScrollPosition.top , animated: false)        
+        return sortedContactKeys.firstIndex(of: title)!
     }
     
     public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
